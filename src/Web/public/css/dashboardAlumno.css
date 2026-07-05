@@ -1,0 +1,38 @@
+/* Dashboard Alumno styles */
+
+body {
+    background-color: #F9FAFB;
+}
+
+.alumno-page {
+    width: 92%;
+    max-width: 1200px;
+    margin: 2rem auto 2rem;
+}
+
+.alumno-page .app-content {
+    margin-top: 0;
+}
+
+.alumno-page .role-view {
+    display: block;
+}
+
+.alumno-page .stat-value {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #1F2937;
+    margin: 0.35rem 0;
+}
+
+.alumno-page .stat-sub {
+    color: #6B7280;
+    font-size: 0.86rem;
+}
+
+@media (max-width: 768px) {
+    .alumno-page {
+        width: 94%;
+        margin-top: 1rem;
+    }
+}

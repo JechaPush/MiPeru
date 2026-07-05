@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,10 +22,30 @@ public class WebServer {
     private HttpServer server;
     private EscuelaController controller;
     private int port;
+    private final Path staticRoot;
 
     public WebServer(EscuelaController controller, int port) {
         this.controller = controller;
         this.port = port;
+        this.staticRoot = resolveStaticRoot();
+    }
+
+    private Path resolveStaticRoot() {
+        Path cwd = Paths.get(System.getProperty("user.dir"));
+        List<Path> candidates = List.of(
+            cwd.resolve("src").resolve("Web").resolve("public"),
+            cwd.resolve("MiPeru").resolve("src").resolve("Web").resolve("public"),
+            cwd.resolve("public"),
+            Paths.get("src", "Web", "public")
+        );
+
+        for (Path candidate : candidates) {
+            if (Files.exists(candidate)) {
+                return candidate.toAbsolutePath().normalize();
+            }
+        }
+
+        return cwd.toAbsolutePath().normalize();
     }
 
     public void start() throws IOException {
@@ -88,29 +109,32 @@ public class WebServer {
     }
 
     // 1. Static Files Handler
-    private static class StaticFileHandler implements HttpHandler {
+    private class StaticFileHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             if (handleOptions(exchange)) return;
             
             String pathStr = exchange.getRequestURI().getPath();
             if (pathStr.equals("/")) {
-                pathStr = "/index.html";
+                pathStr = "/html/login.html";
             }
 
             // Path to web files
-            Path filePath = Paths.get("src", "Web", "public", pathStr.substring(1));
+            Path filePath = staticRoot.resolve(pathStr.substring(1)).normalize();
+            if ((!Files.exists(filePath) || Files.isDirectory(filePath)) && pathStr.startsWith("/html/html/")) {
+                String normalizedPath = "/html/" + pathStr.substring("/html/html/".length());
+                filePath = staticRoot.resolve(normalizedPath.substring(1)).normalize();
+                pathStr = normalizedPath;
+            }
             if (!Files.exists(filePath) || Files.isDirectory(filePath)) {
-                // Fallback to index.html for SPA-like routes if they happen, or return 404
-                filePath = Paths.get("src", "Web", "public", "index.html");
-                if (!Files.exists(filePath)) {
-                    String errorMsg = "404 Not Found: " + pathStr;
-                    exchange.sendResponseHeaders(404, errorMsg.length());
-                    try (OutputStream os = exchange.getResponseBody()) {
-                        os.write(errorMsg.getBytes());
-                    }
-                    return;
+                String errorMsg = "404 Not Found: " + pathStr;
+                byte[] errorBytes = errorMsg.getBytes(StandardCharsets.UTF_8);
+                exchange.getResponseHeaders().set("Content-Type", "text/plain; charset=UTF-8");
+                exchange.sendResponseHeaders(404, errorBytes.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(errorBytes);
                 }
+                return;
             }
 
             String contentType = "text/html";
@@ -251,7 +275,7 @@ public class WebServer {
                     for (int i = 0; i < pagos.size(); i++) {
                         Pago p = pagos.get(i);
                         Alumno a = (Alumno) DataRepository.getInstance().getUsuariosById().get(p.getIdAlumno());
-                        jsonBuilder.append(String.format(
+                        jsonBuilder.append(String.format(Locale.US,
                             "{\"id\": \"%s\", \"alumno\": \"%s\", \"monto\": %f, \"concepto\": \"%s\", \"pagado\": %b, \"vencimiento\": \"%s\", \"fechaPago\": \"%s\"}",
                             p.getId(), (a != null ? a.getNombre() : "Desconocido"), p.getMonto(), p.getConcepto(), p.isPagado(), p.getFechaVencimiento(), p.getFechaPago()
                         ));
@@ -346,7 +370,7 @@ public class WebServer {
                             .collect(Collectors.toList());
 
                         String notasJson = notasCurso.stream()
-                            .map(n -> String.format("{\"periodo\": \"%s\", \"letra\": \"%s\", \"nota\": %.1f}", n.getPeriodo(), n.getValorLetra(), n.getValorNumerico()))
+                            .map(n -> String.format(Locale.US, "{\"periodo\": \"%s\", \"letra\": \"%s\", \"nota\": %.1f}", n.getPeriodo(), n.getValorLetra(), n.getValorNumerico()))
                             .collect(Collectors.joining(",", "[", "]"));
 
                         jsonBuilder.append(String.format(
@@ -398,7 +422,7 @@ public class WebServer {
                         .collect(Collectors.toList());
                     for (int i = 0; i < alumnoPagos.size(); i++) {
                         Pago p = alumnoPagos.get(i);
-                        jsonBuilder.append(String.format(
+                        jsonBuilder.append(String.format(Locale.US,
                             "{\"id\": \"%s\", \"monto\": %f, \"concepto\": \"%s\", \"pagado\": %b, \"vencimiento\": \"%s\", \"fechaPago\": \"%s\"}",
                             p.getId(), p.getMonto(), p.getConcepto(), p.isPagado(), p.getFechaVencimiento(), p.getFechaPago()
                         ));

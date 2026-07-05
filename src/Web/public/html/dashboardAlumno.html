@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institución Educativa "Mi Perú" - Dashboard Alumno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos-base.css">
+    <link rel="stylesheet" href="../css/dashboardAlumno.css">
+</head>
+<body>
+    <div class="top-accent-bar"></div>
+
+    <div id="app-container" class="alumno-page">
+        <header class="app-header">
+            <div class="brand">
+                <span class="logo-emoji">🇵🇪</span>
+                <div>
+                    <h2>I.E. "Mi Perú"</h2>
+                    <p id="user-role-label">Dashboard Alumno</p>
+                </div>
+            </div>
+            <div class="user-profile">
+                <span id="user-display-name">Alumno</span>
+                <button id="btn-logout" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section id="view-alumno" class="role-view">
+                <div class="dashboard-grid">
+                    <div class="card stat-card border-gold">
+                        <h3>Desempeño General</h3>
+                        <p id="al-desempeno" class="stat-value">Cargando...</p>
+                        <span class="stat-sub">Análisis en base a escala AD, A, B, C</span>
+                    </div>
+                    <div class="card stat-card border-red">
+                        <h3>Grado y Sección</h3>
+                        <p id="al-grado-seccion" class="stat-value">Cargando...</p>
+                        <span class="stat-sub">Información de Matrícula</span>
+                    </div>
+                </div>
+
+                <div class="layout-sections">
+                    <div class="left-col">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3>Mis Cursos y Notas</h3>
+                            </div>
+                            <div class="table-container">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Curso</th>
+                                            <th>Calificaciones por Bimestre</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="al-cursos-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3>Tareas y Envíos</h3>
+                            </div>
+                            <div id="al-tareas-list" class="list-container"></div>
+                        </div>
+                    </div>
+
+                    <div class="right-col">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3>Anuncios Recientes</h3>
+                            </div>
+                            <div id="al-anuncios-list" class="list-container"></div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Mis Pensiones y Pagos</h3>
+                            </div>
+                            <div id="al-pagos-list" class="list-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast hidden">Mensaje de alerta</div>
+
+    <script src="../js/dashboardAlumno.js"></script>
+</body>
+</html>

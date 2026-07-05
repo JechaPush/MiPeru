@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institución Educativa "Mi Perú" - Dashboard Profesor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos-base.css">
+    <link rel="stylesheet" href="../css/dashboardProfesor.css">
+</head>
+<body>
+    <div class="top-accent-bar"></div>
+
+    <div id="app-container" class="profesor-page">
+        <header class="app-header">
+            <div class="brand">
+                <span class="logo-emoji">🇵🇪</span>
+                <div>
+                    <h2>I.E. "Mi Perú"</h2>
+                    <p id="user-role-label">Dashboard Profesor</p>
+                </div>
+            </div>
+            <div class="user-profile">
+                <span id="user-display-name">Profesor</span>
+                <button id="btn-logout" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section id="view-profesor" class="role-view">
+                <div class="layout-sections">
+                    <div class="left-col">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3>Cursos Asignados</h3>
+                            </div>
+                            <div id="prof-cursos-container" class="grid-2-col"></div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3>Registro de Calificaciones e Inasistencias</h3>
+                            </div>
+                            <div class="tabs-header">
+                                <button class="tab-btn active" onclick="switchProfTab('tab-notas')">Registrar Notas</button>
+                                <button class="tab-btn" onclick="switchProfTab('tab-asistencia')">Registrar Asistencia</button>
+                                <button class="tab-btn" onclick="switchProfTab('tab-tareas')">Crear Tarea</button>
+                            </div>
+
+                            <div class="tabs-content">
+                                <div id="tab-notas" class="tab-pane">
+                                    <form id="form-prof-notas">
+                                        <div class="form-group-row">
+                                            <div class="form-group">
+                                                <label for="prof-nota-curso">Curso</label>
+                                                <select id="prof-nota-curso" required></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prof-nota-alumno">Alumno</label>
+                                                <select id="prof-nota-alumno" required>
+                                                    <option value="">Seleccione un curso primero</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group-row">
+                                            <div class="form-group">
+                                                <label for="prof-nota-valor">Calificación Numérica (0-20)</label>
+                                                <input type="number" id="prof-nota-valor" min="0" max="20" step="0.5" placeholder="Ej: 18.5" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prof-nota-periodo">Periodo</label>
+                                                <select id="prof-nota-periodo" required>
+                                                    <option value="Bimestre 1">Bimestre 1</option>
+                                                    <option value="Bimestre 2">Bimestre 2</option>
+                                                    <option value="Bimestre 3">Bimestre 3</option>
+                                                    <option value="Bimestre 4">Bimestre 4</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block">Registrar Nota (Auto-conversión a Escala de Letras)</button>
+                                    </form>
+                                </div>
+
+                                <div id="tab-asistencia" class="tab-pane hidden">
+                                    <form id="form-prof-asistencia">
+                                        <div class="form-group-row">
+                                            <div class="form-group">
+                                                <label for="prof-asis-curso">Curso</label>
+                                                <select id="prof-asis-curso" required></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prof-asis-alumno">Alumno</label>
+                                                <select id="prof-asis-alumno" required>
+                                                    <option value="">Seleccione un curso primero</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group-row">
+                                            <div class="form-group">
+                                                <label for="prof-asis-estado">Estado de Asistencia</label>
+                                                <select id="prof-asis-estado" required>
+                                                    <option value="ASISTENCIA">Asistencia</option>
+                                                    <option value="TARDANZA">Tardanza</option>
+                                                    <option value="FALTA">Falta</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prof-asis-fecha">Fecha</label>
+                                                <input type="date" id="prof-asis-fecha" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prof-asis-obs">Observación / Detalle</label>
+                                            <input type="text" id="prof-asis-obs" placeholder="Ej: Justificó tardanza médica">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block">Registrar Asistencia</button>
+                                    </form>
+                                </div>
+
+                                <div id="tab-tareas" class="tab-pane hidden">
+                                    <form id="form-prof-tareas">
+                                        <div class="form-group">
+                                            <label for="prof-tar-curso">Curso</label>
+                                            <select id="prof-tar-curso" required></select>
+                                        </div>
+                                        <div class="form-group-row">
+                                            <div class="form-group">
+                                                <label for="prof-tar-titulo">Título de la Tarea</label>
+                                                <input type="text" id="prof-tar-titulo" placeholder="Ej: Trabajo de Investigación" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prof-tar-fecha">Fecha de Entrega</label>
+                                                <input type="date" id="prof-tar-fecha" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prof-tar-desc">Instrucciones</label>
+                                            <textarea id="prof-tar-desc" rows="3" placeholder="Detalle lo que los alumnos deben entregar" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prof-tar-archivo">Archivo Adjunto (Nombre del archivo)</label>
+                                            <input type="text" id="prof-tar-archivo" placeholder="Ej: guia_trabajo.pdf">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block">Crear y Publicar Tarea</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Revisar Envíos de Alumnos</h3>
+                            </div>
+                            <div id="prof-entregas-list" class="list-container"></div>
+                        </div>
+                    </div>
+
+                    <div class="right-col">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3>Mi Horario de Clases</h3>
+                            </div>
+                            <div id="prof-horario-list" class="list-container"></div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Anuncios del Colegio</h3>
+                            </div>
+                            <div class="card-action-bar mb-3">
+                                <form id="form-prof-anuncio">
+                                    <div class="form-group">
+                                        <input type="text" id="prof-anuncio-titulo" placeholder="Título del anuncio..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea id="prof-anuncio-cont" rows="2" placeholder="Contenido del anuncio..." required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary btn-block">Publicar Anuncio</button>
+                                </form>
+                            </div>
+                            <div id="prof-anuncios-list" class="list-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast hidden">Mensaje de alerta</div>
+
+    <div id="grade-modal" class="modal hidden">
+        <div class="modal-content card">
+            <h2>Calificar Tarea Recibida</h2>
+            <form id="form-grade-submission">
+                <input type="hidden" id="modal-task-id">
+                <input type="hidden" id="modal-student-id">
+
+                <p><strong>Alumno:</strong> <span id="modal-student-name">...</span></p>
+                <p><strong>Archivo Enviado:</strong> <span id="modal-filename">...</span></p>
+
+                <div class="form-group">
+                    <label for="modal-grade">Calificación (Escala de Letras)</label>
+                    <select id="modal-grade" required>
+                        <option value="AD">AD - Logro Destacado</option>
+                        <option value="A">A - Logro Previsto</option>
+                        <option value="B">B - En Proceso</option>
+                        <option value="C">C - En Inicio</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modal-comment">Comentarios de Retroalimentación</label>
+                    <input type="text" id="modal-comment" placeholder="Ej: Excelente presentación." required>
+                </div>
+
+                <div class="form-group-row mt-3">
+                    <button type="button" class="btn btn-secondary" onclick="closeGradeModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Registrar Calificación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/dashboardProfesor.js"></script>
+</body>
+</html>
