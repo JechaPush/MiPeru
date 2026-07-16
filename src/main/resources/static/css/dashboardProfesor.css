@@ -1,0 +1,26 @@
+/* Dashboard Profesor styles */
+
+body {
+    background-color: #F9FAFB;
+}
+
+.profesor-page {
+    width: 92%;
+    max-width: 1200px;
+    margin: 2rem auto 2rem;
+}
+
+.profesor-page .app-content {
+    margin-top: 0;
+}
+
+.profesor-page .role-view {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .profesor-page {
+        width: 94%;
+        margin-top: 1rem;
+    }
+}

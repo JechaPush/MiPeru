@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I.E. "Mi Perú" - Director</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos-base.css">
+    <link rel="stylesheet" href="../css/tablas.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/dashboardDirector.css">
+</head>
+
+<body>
+    <div class="top-accent-bar"></div>
+
+    <div id="app-container" class="director-layout">
+
+        <aside class="director-sidebar">
+            <div class="sidebar-brand">
+                <img src="../img/logo.png" alt="Logo I.E. Mi Perú">
+                <div>
+                    <h2>I.E. "Mi Perú"</h2>
+                    <p>Portal Escolar Inteligente</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="sidebar-link active" data-section="section-resumen">Resumen</button>
+                <button class="sidebar-link" data-section="section-alumnos">Alumnos</button>
+                <button class="sidebar-link" data-section="section-docentes">Docentes</button>
+                <button class="sidebar-link" data-section="section-finanzas">Finanzas</button>
+                <button class="sidebar-link" data-section="section-usuarios">Usuarios</button>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar">JP</div>
+                <strong id="sidebar-user-name">Director</strong>
+                <span>Director</span>
+                <button id="btn-logout" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="director-main">
+            <header class="director-header">
+                <div>
+                    <h1>I.E. "Mi Perú"</h1>
+                    <p id="user-role-label">Rol: Director</p>
+                </div>
+
+                <div class="header-user">
+                    <span id="user-display-name">Director</span>
+                </div>
+            </header>
+
+            <section id="view-director" class="role-view">
+
+                <section id="section-resumen" class="director-section active">
+                    <div class="section-title">
+                        <h2>Resumen General</h2>
+                        <p>Vista rápida de la gestión institucional.</p>
+                    </div>
+
+                    <div class="dashboard-grid mb-4">
+                        <div class="card stat-card border-red">
+                            <h3>Total Alumnos</h3>
+                            <p id="dir-stat-alumnos" class="stat-value">0</p>
+                            <span class="stat-sub">Estudiantes registrados</span>
+                        </div>
+
+                        <div class="card stat-card border-gold">
+                            <h3>Total Docentes</h3>
+                            <p id="dir-stat-docentes" class="stat-value">0</p>
+                            <span class="stat-sub">Docentes registrados</span>
+                        </div>
+
+                        <div class="card stat-card border-red">
+                            <h3>Total Cursos</h3>
+                            <p id="dir-stat-cursos" class="stat-value">0</p>
+                            <span class="stat-sub">Cursos activos</span>
+                        </div>
+
+                        <div class="card stat-card border-gold">
+                            <h3>Recaudación Total</h3>
+                            <p id="dir-stat-recaudacion" class="stat-value">S/ 0.00</p>
+                            <span class="stat-sub">Total recaudado</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Últimos Movimientos</h3>
+                            </div>
+
+                            <div class="summary-list">
+                                <div class="summary-item">Alumno matriculado recientemente</div>
+                                <div class="summary-item">Pago registrado en el sistema</div>
+                                <div class="summary-item">Docente registrado correctamente</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Alertas y Pendientes</h3>
+                            </div>
+
+                            <div class="alert-list">
+                                <div class="alert-item danger">Pagos pendientes por revisar</div>
+                                <div class="alert-item warning">Matrículas por validar</div>
+                                <div class="alert-item info">Revisar asistencia docente</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h3>Accesos Rápidos</h3>
+                        </div>
+
+                        <div class="quick-actions">
+                            <button class="quick-card" data-section="section-usuarios">Registrar Usuario</button>
+                            <button class="quick-card" data-section="section-alumnos">Gestionar Alumnos</button>
+                            <button class="quick-card" data-section="section-finanzas">Ver Finanzas</button>
+                            <button class="quick-card" data-section="section-docentes">Ver Docentes</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-alumnos" class="director-section hidden">
+                    <div class="section-head">
+                        <div class="section-title">
+                            <h2>Gestión de Alumnos</h2>
+                            <p>Administra alumnos registrados, estado académico y matrículas.</p>
+                        </div>
+
+                        <div class="section-actions">
+                            <button id="btn-open-alumno" class="btn btn-outline">
+                                + Registrar Alumno
+                            </button>
+
+                            <button id="btn-open-matricula" class="btn btn-primary">
+                                + Nueva Matrícula
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="alumnos-summary">
+                        <div class="mini-stat">
+                            <span>Total alumnos</span>
+                            <strong id="mini-total-alumnos">0</strong>
+                        </div>
+
+                        <div class="mini-stat">
+                            <span>Matriculados</span>
+                            <strong id="mini-matriculados">0</strong>
+                        </div>
+
+                        <div class="mini-stat">
+                            <span>Sin matricular</span>
+                            <strong id="mini-sin-matricula">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="card alumnos-card">
+                        <div class="card-header table-card-header">
+                            <div>
+                                <h3>Alumnos Registrados</h3>
+                                <p class="text-muted">Listado general de estudiantes de la institución.</p>
+                            </div>
+
+                            <div class="table-tools">
+                                <input type="text" class="search-input" placeholder="Buscar alumno...">
+                            </div>
+                        </div>
+
+                        <div class="table-container alumnos-table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Alumno</th>
+                                        <th>Grado y Sección</th>
+                                        <th>Estado Académico</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dir-alumnos-table-body"></tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-footer">
+                            <span id="alumnos-table-count">Mostrando alumnos registrados</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-docentes" class="director-section hidden">
+    <div class="section-head">
+        <div class="section-title">
+            <h2>Gestión de Docentes</h2>
+            <p>Administra docentes registrados, especialidad y asistencia.</p>
+        </div>
+
+        <button id="btn-open-docente" class="btn btn-primary">
+            + Registrar Docente
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="card-header table-card-header">
+            <div>
+                <h3>Docentes Registrados</h3>
+                <p class="text-muted">Listado general del personal docente.</p>
+            </div>
+
+            <div class="table-tools">
+                <input type="text" id="search-docente" class="search-input" placeholder="Buscar docente...">
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Docente</th>
+                        <th>Especialidad</th>
+                        <th>Asistencia</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="dir-docentes-list"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+                <div id="modal-docente" class="modal-overlay hidden">
+                    <div class="modal-card modal-card-lg">
+                        <div class="modal-header">
+                            <div>
+                                <h2>Registrar Nuevo Docente</h2>
+                                <p>Completa los datos para crear un docente en el sistema.</p>
+                            </div>
+
+                            <button type="button" id="btn-close-docente" class="modal-close">×</button>
+                        </div>
+
+                        <form id="form-dir-reg-docente">
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="reg-doc-id">Código (ID)</label>
+                                    <input type="text" id="reg-doc-id" placeholder="Ej: DOC03" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-doc-nombre">Nombre Completo</label>
+                                    <input type="text" id="reg-doc-nombre" placeholder="Ej: Clara Luz" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="reg-doc-user">Usuario de Acceso</label>
+                                    <input type="text" id="reg-doc-user" placeholder="Ej: c_luz" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-doc-pass">Contraseña</label>
+                                    <input type="password" id="reg-doc-pass" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reg-doc-esp">Especialidad / Área</label>
+                                <input type="text" id="reg-doc-esp" placeholder="Ej: Ciencias Naturales" required>
+                            </div>
+
+                            <div class="modal-actions">
+                                <button type="button" id="btn-cancel-docente" class="btn btn-secondary">
+                                    Cancelar
+                                </button>
+
+                                <button type="submit" class="btn btn-primary">
+                                    Registrar Docente
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <section id="section-finanzas" class="director-section hidden">
+                    <div class="section-title">
+                        <h2>Finanzas y Pensiones</h2>
+                        <p>Controla pagos, pensiones y recaudación institucional.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Control de Pensiones y Recaudación</h3>
+                        </div>
+
+                        <div class="table-container max-height-300">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Alumno</th>
+                                        <th>Monto</th>
+                                        <th>Concepto</th>
+                                        <th>Estado</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dir-pagos-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+        </main>
+    </div>
+    <!-- MODAL REGISTRAR ALUMNO -->
+    <div id="modal-alumno" class="modal-overlay hidden">
+        <div class="modal-card modal-card-lg">
+            <div class="modal-header">
+                <div>
+                    <h2>Registrar Nuevo Alumno</h2>
+                    <p>Completa los datos para crear un estudiante en el sistema.</p>
+                </div>
+
+                <button type="button" id="btn-close-alumno" class="modal-close">
+                    ×
+                </button>
+            </div>
+
+            <form id="form-dir-reg-alumno">
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="reg-al-id">Código (ID)</label>
+                        <input type="text" id="reg-al-id" placeholder="Ej: AL04" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-al-nombre">Nombre Completo</label>
+                        <input type="text" id="reg-al-nombre" placeholder="Ej: Pedro Infante" required>
+                    </div>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="reg-al-user">Usuario de Acceso</label>
+                        <input type="text" id="reg-al-user" placeholder="Ej: p_infante" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-al-pass">Contraseña</label>
+                        <input type="password" id="reg-al-pass" placeholder="Ingrese contraseña" required>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="btn-cancel-alumno" class="btn btn-secondary">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Registrar Estudiante
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- MODAL MATRÍCULA -->
+    <div id="modal-matricula" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h2>Registrar / Aprobar Matrícula</h2>
+                    <p>Completa los datos para proceder con la matrícula.</p>
+                </div>
+
+                <button type="button" id="btn-close-matricula" class="modal-close">
+                    ×
+                </button>
+            </div>
+
+            <form id="form-dir-matricula">
+                <div class="form-group">
+                    <label for="dir-mat-alumno">Alumno</label>
+                    <select id="dir-mat-alumno" required></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dir-mat-grado">Grado</label>
+                    <select id="dir-mat-grado" required>
+                        <option value="1ro">1ro Primaria</option>
+                        <option value="2do">2do Primaria</option>
+                        <option value="3ro">3ro Primaria</option>
+                        <option value="4to">4to Primaria</option>
+                        <option value="5to">5to Primaria</option>
+                        <option value="6to">6to Primaria</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dir-mat-seccion">Sección</label>
+                    <select id="dir-mat-seccion" required>
+                        <option value="A">Sección A</option>
+                        <option value="B">Sección B</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="btn-cancel-matricula" class="btn btn-secondary">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Registrar Matrícula
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div id="toast" class="toast hidden">Mensaje de alerta</div>
+
+    <div id="modal-docente" class="modal-overlay hidden">
+    <div class="modal-card modal-card-lg">
+        <div class="modal-header">
+            <div>
+                <h2>Registrar Nuevo Docente</h2>
+                <p>Completa los datos para crear un docente en el sistema.</p>
+            </div>
+
+            <button type="button" id="btn-close-docente" class="modal-close">×</button>
+        </div>
+
+        <form id="form-dir-reg-docente">
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="reg-doc-id">Código (ID)</label>
+                    <input type="text" id="reg-doc-id" placeholder="Ej: DOC03" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-doc-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-doc-nombre" placeholder="Ej: Clara Luz" required>
+                </div>
+            </div>
+
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="reg-doc-user">Usuario de Acceso</label>
+                    <input type="text" id="reg-doc-user" placeholder="Ej: c_luz" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-doc-pass">Contraseña</label>
+                    <input type="password" id="reg-doc-pass" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-doc-esp">Especialidad / Área</label>
+                <input type="text" id="reg-doc-esp" placeholder="Ej: Ciencias Naturales" required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="btn-cancel-docente" class="btn btn-secondary">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn btn-primary">
+                    Registrar Docente
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+    <script src="../js/dashboardDirector.js"></script>
+</body>
+
+</html>
