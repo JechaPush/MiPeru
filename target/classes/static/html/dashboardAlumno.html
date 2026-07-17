@@ -4,35 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institución Educativa "Mi Perú" - Dashboard Alumno</title>
+    <meta name="description" content="Portal del alumno — I.E. Mi Perú. Accede a tus cursos, notas, tareas, anuncios y pagos de pensión.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/estilos-base.css">
     <link rel="stylesheet" href="../css/dashboardAlumno.css">
 </head>
-<body>
-    <div class="top-accent-bar"></div>
+<body class="alumno-body">
 
-    <div id="app-container" class="alumno-page">
-        <header class="app-header">
-            <div class="brand">
-                <span class="logo-emoji">🇵🇪</span>
-                <div>
-                    <h2>I.E. "Mi Perú"</h2>
-                    <p id="user-role-label">Dashboard Alumno</p>
-                </div>
+    <!-- ===== SIDEBAR ===== -->
+    <aside id="al-sidebar" class="al-sidebar">
+        <div class="al-sidebar-brand">
+            <div class="al-sidebar-logo">
+                <i class="bi bi-building-fill-check"></i>
             </div>
-            <div class="user-profile">
-                <span id="user-display-name">Alumno</span>
-                <button id="btn-logout" class="btn btn-secondary">Cerrar Sesión</button>
+            <div>
+                <span class="al-sidebar-school">I.E. "Mi Perú"</span>
+                <span id="user-role-label" class="al-sidebar-role">Rol: Alumno</span>
+            </div>
+        </div>
+
+        <nav class="al-sidebar-nav" id="al-sidebar-nav">
+            <button class="al-nav-item active" data-module="inicio" data-title="Inicio" id="nav-inicio">
+                <i class="bi bi-house-door"></i>
+                <span>Inicio</span>
+            </button>
+            <button class="al-nav-item" data-module="cursos" data-title="Mis Cursos y Notas" id="nav-cursos">
+                <i class="bi bi-journal-bookmark"></i>
+                <span>Mis Cursos y Notas</span>
+            </button>
+            <button class="al-nav-item" data-module="tareas" data-title="Tareas y Envíos" id="nav-tareas">
+                <i class="bi bi-file-earmark-check"></i>
+                <span>Tareas y Envíos</span>
+            </button>
+            <button class="al-nav-item" data-module="anuncios" data-title="Anuncios" id="nav-anuncios">
+                <i class="bi bi-megaphone"></i>
+                <span>Anuncios</span>
+            </button>
+            <button class="al-nav-item" data-module="pagos" data-title="Pensiones y Pagos" id="nav-pagos">
+                <i class="bi bi-credit-card"></i>
+                <span>Pensiones y Pagos</span>
+            </button>
+            <button class="al-nav-item" data-module="perfil" data-title="Mi Perfil" id="nav-perfil">
+                <i class="bi bi-person-circle"></i>
+                <span>Mi Perfil</span>
+            </button>
+        </nav>
+
+        <div class="al-sidebar-footer">
+            <button id="btn-logout" class="al-logout-btn">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== OVERLAY MÓVIL ===== -->
+    <div id="al-overlay" class="al-overlay hidden"></div>
+
+    <!-- ===== ÁREA PRINCIPAL ===== -->
+    <div class="al-main-wrap">
+
+        <!-- HEADER -->
+        <header class="al-header">
+            <div class="al-header-left">
+                <button id="al-toggle-sidebar" class="al-toggle-btn" aria-label="Abrir menú">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h1 id="al-module-title" class="al-module-title">Inicio</h1>
+            </div>
+            <div class="al-header-right">
+                <span class="al-greeting">Hola, <strong id="user-display-name">Alumno</strong></span>
+                <div class="al-avatar" id="al-avatar" aria-hidden="true">A</div>
             </div>
         </header>
 
-        <main class="app-content">
-            <section id="view-alumno" class="role-view">
-                <div class="dashboard-grid">
+        <!-- CONTENIDO MODULAR -->
+        <main class="al-content" id="al-content">
+
+            <!-- MÓDULO 1: INICIO -->
+            <section id="module-inicio" class="al-module active fade-in">
+
+                <!-- Fila 1: tarjetas principales -->
+                <div class="al-inicio-row-main">
                     <div class="card stat-card border-gold">
                         <h3>Desempeño General</h3>
                         <p id="al-desempeno" class="stat-value">Cargando...</p>
-                        <span class="stat-sub">Análisis en base a escala AD, A, B, C</span>
+                        <span class="stat-sub">Escala: AD, A, B, C</span>
                     </div>
                     <div class="card stat-card border-red">
                         <h3>Grado y Sección</h3>
@@ -41,53 +99,144 @@
                     </div>
                 </div>
 
-                <div class="layout-sections">
-                    <div class="left-col">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h3>Mis Cursos y Notas</h3>
-                            </div>
-                            <div class="table-container">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Curso</th>
-                                            <th>Calificaciones por Bimestre</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="al-cursos-table-body"></tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h3>Tareas y Envíos</h3>
-                            </div>
-                            <div id="al-tareas-list" class="list-container"></div>
-                        </div>
+                <!-- Fila 2: mini-tarjetas de conteo -->
+                <div class="al-inicio-row-mini">
+                    <div class="al-inicio-mini-card al-stat-cursos">
+                        <span class="al-inicio-mini-label">Cursos</span>
+                        <span id="al-total-cursos" class="al-inicio-mini-value">—</span>
+                        <span class="al-inicio-mini-sub">matriculados</span>
                     </div>
+                    <div class="al-inicio-mini-card al-stat-tareas">
+                        <span class="al-inicio-mini-label">Tareas pendientes</span>
+                        <span id="al-total-tareas" class="al-inicio-mini-value">—</span>
+                        <span class="al-inicio-mini-sub">por entregar</span>
+                    </div>
+                    <div class="al-inicio-mini-card" id="al-inicio-pension-card">
+                        <span class="al-inicio-mini-label">Pensión</span>
+                        <span id="al-inicio-pension" class="al-inicio-mini-value">—</span>
+                        <span class="al-inicio-mini-sub" id="al-inicio-pension-sub"></span>
+                    </div>
+                </div>
 
-                    <div class="right-col">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h3>Anuncios Recientes</h3>
-                            </div>
-                            <div id="al-anuncios-list" class="list-container"></div>
+                <!-- Fila 3: accesos rápidos compactos -->
+                <div class="al-quick-links">
+                    <p class="al-section-label">Accesos rápidos</p>
+                    <div class="al-quick-grid">
+                        <button class="al-quick-card" data-module="cursos" data-title="Mis Cursos y Notas">
+                            <i class="bi bi-journal-bookmark"></i>
+                            <span>Mis Cursos y Notas</span>
+                        </button>
+                        <button class="al-quick-card" data-module="tareas" data-title="Tareas y Envíos">
+                            <i class="bi bi-file-earmark-check"></i>
+                            <span>Tareas y Envíos</span>
+                        </button>
+                        <button class="al-quick-card" data-module="anuncios" data-title="Anuncios">
+                            <i class="bi bi-megaphone"></i>
+                            <span>Anuncios</span>
+                        </button>
+                        <button class="al-quick-card" data-module="pagos" data-title="Pensiones y Pagos">
+                            <i class="bi bi-credit-card"></i>
+                            <span>Pensiones y Pagos</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fila 4: previews breves (ocultos hasta que JS los llene con datos) -->
+                <div class="al-inicio-previews" id="al-inicio-previews">
+                    <div class="al-inicio-preview-card hidden" id="al-inicio-tarea-preview">
+                        <p class="al-inicio-preview-label">
+                            <i class="bi bi-file-earmark-check"></i> Próxima tarea
+                        </p>
+                        <p class="al-inicio-preview-title" id="al-inicio-proxima-tarea-titulo"></p>
+                        <p class="al-inicio-preview-sub" id="al-inicio-proxima-tarea-fecha"></p>
+                    </div>
+                    <div class="al-inicio-preview-card hidden" id="al-inicio-anuncio-preview">
+                        <p class="al-inicio-preview-label">
+                            <i class="bi bi-megaphone"></i> Último anuncio
+                        </p>
+                        <p class="al-inicio-preview-title" id="al-inicio-ultimo-anuncio-titulo"></p>
+                        <p class="al-inicio-preview-sub" id="al-inicio-ultimo-anuncio-autor"></p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- MÓDULO 2: MIS CURSOS Y NOTAS -->
+            <section id="module-cursos" class="al-module hidden">
+                <div class="al-cursos-wrap">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Mis Cursos y Notas</h2>
+                            <span class="al-section-sub">Calificaciones por bimestre</span>
                         </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Mis Pensiones y Pagos</h3>
-                            </div>
-                            <div id="al-pagos-list" class="list-container"></div>
+                        <div class="table-container">
+                            <table class="table al-cursos-tabla">
+                                <thead>
+                                    <tr>
+                                        <th>Curso</th>
+                                        <th>Calificaciones por Bimestre</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="al-cursos-table-body"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <!-- MÓDULO 3: TAREAS Y ENVÍOS -->
+            <section id="module-tareas" class="al-module hidden">
+                <div class="al-module-header-row">
+                    <h2>Tareas y Envíos</h2>
+                </div>
+                <div id="al-tareas-list" class="al-tareas-list"></div>
+            </section>
+
+            <!-- MÓDULO 4: ANUNCIOS -->
+            <section id="module-anuncios" class="al-module hidden">
+                <div class="al-module-header-row">
+                    <h2>Anuncios</h2>
+                </div>
+                <div id="al-anuncios-list" class="al-anuncios-list"></div>
+            </section>
+
+            <!-- MÓDULO 5: PENSIONES Y PAGOS -->
+            <section id="module-pagos" class="al-module hidden">
+                <div class="al-module-header-row">
+                    <h2>Pensiones y Pagos</h2>
+                </div>
+                <div id="al-pagos-list" class="al-pagos-list"></div>
+            </section>
+
+            <!-- MÓDULO 6: MI PERFIL -->
+            <section id="module-perfil" class="al-module hidden">
+                <div class="al-perfil-wrap">
+
+                    <!-- Bloque: Identidad -->
+                    <div class="card al-perfil-identidad">
+                        <div class="al-perfil-avatar" id="al-perfil-avatar">A</div>
+                        <div class="al-perfil-identidad-text">
+                            <p class="al-perfil-nombre" id="al-perfil-nombre">—</p>
+                            <p class="al-perfil-rol-badge" id="al-perfil-rol">Alumno</p>
+                            <p class="al-perfil-codigo" id="al-perfil-codigo"></p>
+                        </div>
+                    </div>
+
+                    <!-- Bloque: Información académica -->
+                    <div class="card al-perfil-academico">
+                        <p class="al-perfil-academico-titulo">Información académica</p>
+                        <div class="al-perfil-academico-grid" id="al-perfil-info">
+                            <p class="text-muted">Cargando datos del perfil...</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
         </main>
     </div>
 
+    <!-- TOAST -->
     <div id="toast" class="toast hidden">Mensaje de alerta</div>
 
     <script src="../js/dashboardAlumno.js"></script>

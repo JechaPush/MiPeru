@@ -486,23 +486,4 @@ async function deleteUser(id) {
         showToast("Error al eliminar usuario", "danger");
     }
 }
-
-/* =========================
-   TABS USUARIOS
-========================= */
-
-function switchDirTab(tabId) {
-    document.querySelectorAll("#section-usuarios .tab-pane").forEach(pane => {
-        pane.classList.add("hidden");
-    });
-
-    document.querySelectorAll("#section-usuarios .tab-btn").forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-    document.getElementById(tabId).classList.remove("hidden");
-
-    if (window.event && window.event.currentTarget) {
-        window.event.currentTarget.classList.add("active");
-    }
-}
+

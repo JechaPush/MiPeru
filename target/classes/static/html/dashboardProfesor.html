@@ -4,190 +4,399 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institución Educativa "Mi Perú" - Dashboard Profesor</title>
+    <meta name="description" content="Portal del docente — I.E. Mi Perú. Gestiona tus asignaturas, registra calificaciones, asistencias y tareas.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/estilos-base.css">
     <link rel="stylesheet" href="../css/dashboardProfesor.css">
 </head>
-<body>
-    <div class="top-accent-bar"></div>
+<body class="profesor-body">
 
-    <div id="app-container" class="profesor-page">
-        <header class="app-header">
-            <div class="brand">
-                <span class="logo-emoji">🇵🇪</span>
-                <div>
-                    <h2>I.E. "Mi Perú"</h2>
-                    <p id="user-role-label">Dashboard Profesor</p>
-                </div>
+    <!-- ===== SIDEBAR ===== -->
+    <aside id="prof-sidebar" class="prof-sidebar">
+        <div class="prof-sidebar-brand">
+            <div class="prof-sidebar-logo">
+                <i class="bi bi-building-fill-check"></i>
             </div>
-            <div class="user-profile">
-                <span id="user-display-name">Profesor</span>
-                <button id="btn-logout" class="btn btn-secondary">Cerrar Sesión</button>
+            <div>
+                <span class="prof-sidebar-school">I.E. "Mi Perú"</span>
+                <span id="user-role-label" class="prof-sidebar-role">Rol: Profesor</span>
+            </div>
+        </div>
+
+        <nav class="prof-sidebar-nav" id="prof-sidebar-nav">
+            <button class="prof-nav-item active" data-module="inicio" data-title="Inicio" id="nav-inicio">
+                <i class="bi bi-house-door"></i>
+                <span>Inicio</span>
+            </button>
+            <button class="prof-nav-item" data-module="cursos" data-title="Mis Cursos" id="nav-cursos">
+                <i class="bi bi-journal-bookmark"></i>
+                <span>Mis Cursos</span>
+            </button>
+            <button class="prof-nav-item" data-module="notas" data-title="Calificaciones" id="nav-notas">
+                <i class="bi bi-patch-check"></i>
+                <span>Calificaciones</span>
+            </button>
+            <button class="prof-nav-item" data-module="asistencia" data-title="Asistencia" id="nav-asistencia">
+                <i class="bi bi-calendar-check"></i>
+                <span>Asistencia</span>
+            </button>
+            <button class="prof-nav-item" data-module="tareas" data-title="Tareas" id="nav-tareas">
+                <i class="bi bi-file-earmark-plus"></i>
+                <span>Tareas</span>
+            </button>
+            <button class="prof-nav-item" data-module="entregas" data-title="Entregas de Alumnos" id="nav-entregas">
+                <i class="bi bi-clipboard-check"></i>
+                <span>Entregas de Alumnos</span>
+            </button>
+            <button class="prof-nav-item" data-module="horario" data-title="Mi Horario" id="nav-horario">
+                <i class="bi bi-clock"></i>
+                <span>Mi Horario</span>
+            </button>
+            <button class="prof-nav-item" data-module="anuncios" data-title="Anuncios" id="nav-anuncios">
+                <i class="bi bi-megaphone"></i>
+                <span>Anuncios</span>
+            </button>
+            <button class="prof-nav-item" data-module="perfil" data-title="Mi Perfil" id="nav-perfil">
+                <i class="bi bi-person-circle"></i>
+                <span>Mi Perfil</span>
+            </button>
+        </nav>
+
+        <div class="prof-sidebar-footer">
+            <button id="btn-logout" class="prof-logout-btn">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== OVERLAY MÓVIL ===== -->
+    <div id="prof-overlay" class="prof-overlay hidden"></div>
+
+    <!-- ===== ÁREA PRINCIPAL ===== -->
+    <div class="prof-main-wrap">
+
+        <!-- HEADER -->
+        <header class="prof-header">
+            <div class="prof-header-left">
+                <button id="prof-toggle-sidebar" class="prof-toggle-btn" aria-label="Abrir menú">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h1 id="prof-module-title" class="prof-module-title">Inicio</h1>
+            </div>
+            <div class="prof-header-right">
+                <span class="prof-greeting">Hola, <strong id="user-display-name">Profesor</strong></span>
+                <div class="prof-avatar" id="prof-avatar" aria-hidden="true">P</div>
             </div>
         </header>
 
-        <main class="app-content">
-            <section id="view-profesor" class="role-view">
-                <div class="layout-sections">
-                    <div class="left-col">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h3>Cursos Asignados</h3>
-                            </div>
-                            <div id="prof-cursos-container" class="grid-2-col"></div>
+        <!-- CONTENIDO MODULAR -->
+        <main class="prof-content" id="prof-content">
+
+            <!-- MÓDULO 1: INICIO -->
+            <section id="module-inicio" class="prof-module active fade-in">
+                <!-- Fila 1: 4 Indicadores compactos -->
+                <div class="prof-inicio-grid">
+                    <div class="prof-inicio-card prof-border-gold">
+                        <span class="prof-inicio-label">Cursos asignados</span>
+                        <span id="prof-total-cursos" class="prof-inicio-value">—</span>
+                        <span class="prof-inicio-sub">Materias</span>
+                    </div>
+                    <div class="prof-inicio-card prof-border-red">
+                        <span class="prof-inicio-label">Total Alumnos</span>
+                        <span id="prof-total-alumnos" class="prof-inicio-value">—</span>
+                        <span class="prof-inicio-sub">Alumnos inscritos</span>
+                    </div>
+                    <div class="prof-inicio-card prof-border-dark" id="prof-total-tareas-card">
+                        <span class="prof-inicio-label">Tareas creadas</span>
+                        <span id="prof-total-tareas" class="prof-inicio-value">—</span>
+                        <span class="prof-inicio-sub">Publicadas</span>
+                    </div>
+                    <div class="prof-inicio-card prof-border-blue" id="prof-total-entregas-card">
+                        <span class="prof-inicio-label">Entregas recibidas</span>
+                        <span id="prof-total-entregas" class="prof-inicio-value">—</span>
+                        <span class="prof-inicio-sub">De alumnos</span>
+                    </div>
+                </div>
+
+                <!-- Accesos rápidos -->
+                <div class="prof-quick-links">
+                    <p class="prof-section-label">Accesos rápidos</p>
+                    <div class="prof-quick-grid">
+                        <button class="prof-quick-card" data-module="notas" data-title="Calificaciones">
+                            <i class="bi bi-patch-check"></i>
+                            <span>Calificaciones</span>
+                        </button>
+                        <button class="prof-quick-card" data-module="asistencia" data-title="Asistencia">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Asistencia</span>
+                        </button>
+                        <button class="prof-quick-card" data-module="tareas" data-title="Tareas">
+                            <i class="bi bi-file-earmark-plus"></i>
+                            <span>Crear Tarea</span>
+                        </button>
+                        <button class="prof-quick-card" data-module="entregas" data-title="Entregas de Alumnos">
+                            <i class="bi bi-clipboard-check"></i>
+                            <span>Revisar Entregas</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Previews (si hay datos) -->
+                <div class="prof-inicio-previews" id="prof-inicio-previews">
+                    <div class="prof-inicio-preview-card hidden" id="prof-inicio-clase-preview">
+                        <p class="prof-inicio-preview-label">
+                            <i class="bi bi-clock"></i> Próxima clase
+                        </p>
+                        <p class="prof-inicio-preview-title" id="prof-inicio-clase-titulo">—</p>
+                        <p class="prof-inicio-preview-sub" id="prof-inicio-clase-horario">—</p>
+                    </div>
+                    <div class="prof-inicio-preview-card hidden" id="prof-inicio-anuncio-preview">
+                        <p class="prof-inicio-preview-label">
+                            <i class="bi bi-megaphone"></i> Último anuncio
+                        </p>
+                        <p class="prof-inicio-preview-title" id="prof-inicio-anuncio-titulo">—</p>
+                        <p class="prof-inicio-preview-sub" id="prof-inicio-anuncio-fecha">—</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO 2: MIS CURSOS -->
+            <section id="module-cursos" class="prof-module hidden">
+                <div class="prof-cursos-wrap">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Cursos Asignados</h2>
+                            <span class="prof-section-sub">Lista de asignaturas y secciones a su cargo</span>
                         </div>
+                        <div id="prof-cursos-container" class="prof-cursos-grid"></div>
+                    </div>
+                </div>
+            </section>
 
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h3>Registro de Calificaciones e Inasistencias</h3>
-                            </div>
-                            <div class="tabs-header">
-                                <button class="tab-btn active" onclick="switchProfTab('tab-notas')">Registrar Notas</button>
-                                <button class="tab-btn" onclick="switchProfTab('tab-asistencia')">Registrar Asistencia</button>
-                                <button class="tab-btn" onclick="switchProfTab('tab-tareas')">Crear Tarea</button>
-                            </div>
-
-                            <div class="tabs-content">
-                                <div id="tab-notas" class="tab-pane">
-                                    <form id="form-prof-notas">
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label for="prof-nota-curso">Curso</label>
-                                                <select id="prof-nota-curso" required></select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="prof-nota-alumno">Alumno</label>
-                                                <select id="prof-nota-alumno" required>
-                                                    <option value="">Seleccione un curso primero</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label for="prof-nota-valor">Calificación Numérica (0-20)</label>
-                                                <input type="number" id="prof-nota-valor" min="0" max="20" step="0.5" placeholder="Ej: 18.5" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="prof-nota-periodo">Periodo</label>
-                                                <select id="prof-nota-periodo" required>
-                                                    <option value="Bimestre 1">Bimestre 1</option>
-                                                    <option value="Bimestre 2">Bimestre 2</option>
-                                                    <option value="Bimestre 3">Bimestre 3</option>
-                                                    <option value="Bimestre 4">Bimestre 4</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-block">Registrar Nota (Auto-conversión a Escala de Letras)</button>
-                                    </form>
-                                </div>
-
-                                <div id="tab-asistencia" class="tab-pane hidden">
-                                    <form id="form-prof-asistencia">
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label for="prof-asis-curso">Curso</label>
-                                                <select id="prof-asis-curso" required></select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="prof-asis-alumno">Alumno</label>
-                                                <select id="prof-asis-alumno" required>
-                                                    <option value="">Seleccione un curso primero</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label for="prof-asis-estado">Estado de Asistencia</label>
-                                                <select id="prof-asis-estado" required>
-                                                    <option value="ASISTENCIA">Asistencia</option>
-                                                    <option value="TARDANZA">Tardanza</option>
-                                                    <option value="FALTA">Falta</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="prof-asis-fecha">Fecha</label>
-                                                <input type="date" id="prof-asis-fecha" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="prof-asis-obs">Observación / Detalle</label>
-                                            <input type="text" id="prof-asis-obs" placeholder="Ej: Justificó tardanza médica">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-block">Registrar Asistencia</button>
-                                    </form>
-                                </div>
-
-                                <div id="tab-tareas" class="tab-pane hidden">
-                                    <form id="form-prof-tareas">
-                                        <div class="form-group">
-                                            <label for="prof-tar-curso">Curso</label>
-                                            <select id="prof-tar-curso" required></select>
-                                        </div>
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label for="prof-tar-titulo">Título de la Tarea</label>
-                                                <input type="text" id="prof-tar-titulo" placeholder="Ej: Trabajo de Investigación" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="prof-tar-fecha">Fecha de Entrega</label>
-                                                <input type="date" id="prof-tar-fecha" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="prof-tar-desc">Instrucciones</label>
-                                            <textarea id="prof-tar-desc" rows="3" placeholder="Detalle lo que los alumnos deben entregar" required></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="prof-tar-archivo">Archivo Adjunto (Nombre del archivo)</label>
-                                            <input type="text" id="prof-tar-archivo" placeholder="Ej: guia_trabajo.pdf">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-block">Crear y Publicar Tarea</button>
-                                    </form>
-                                </div>
-                            </div>
+            <!-- MÓDULO 3: CALIFICACIONES -->
+            <section id="module-notas" class="prof-module hidden">
+                <div class="prof-form-wrap">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Registro de Calificaciones</h2>
+                            <span class="prof-section-sub">Registre las notas bimestrales por curso y alumno</span>
                         </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Revisar Envíos de Alumnos</h3>
+                        <form id="form-prof-notas">
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="prof-nota-curso">Curso</label>
+                                    <select id="prof-nota-curso" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prof-nota-alumno">Alumno</label>
+                                    <select id="prof-nota-alumno" required>
+                                        <option value="">Seleccione un curso primero</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div id="prof-entregas-list" class="list-container"></div>
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="prof-nota-valor">Calificación Numérica (0-20)</label>
+                                    <input type="number" id="prof-nota-valor" min="0" max="20" step="0.5" placeholder="Ej: 18.5" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prof-nota-periodo">Periodo</label>
+                                    <select id="prof-nota-periodo" required>
+                                        <option value="Bimestre 1">Bimestre 1</option>
+                                        <option value="Bimestre 2">Bimestre 2</option>
+                                        <option value="Bimestre 3">Bimestre 3</option>
+                                        <option value="Bimestre 4">Bimestre 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Guardar calificación</button>
+                            <p class="prof-helper-text mt-2">La escala literal se calcula automáticamente</p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO 4: ASISTENCIA -->
+            <section id="module-asistencia" class="prof-module hidden">
+                <div class="prof-form-wrap">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Registro de Asistencia</h2>
+                            <span class="prof-section-sub">Registre la asistencia de los alumnos a clase</span>
+                        </div>
+                        <form id="form-prof-asistencia">
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="prof-asis-curso">Curso</label>
+                                    <select id="prof-asis-curso" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prof-asis-alumno">Alumno</label>
+                                    <select id="prof-asis-alumno" required>
+                                        <option value="">Seleccione un curso primero</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="prof-asis-estado">Estado de Asistencia</label>
+                                    <select id="prof-asis-estado" required>
+                                        <option value="ASISTENCIA">Asistencia</option>
+                                        <option value="TARDANZA">Tardanza</option>
+                                        <option value="FALTA">Falta</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prof-asis-fecha">Fecha</label>
+                                    <input type="date" id="prof-asis-fecha" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-asis-obs">Observación / Detalle</label>
+                                <input type="text" id="prof-asis-obs" placeholder="Ej: Justificó tardanza médica">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Registrar Asistencia</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO 5: TAREAS -->
+            <section id="module-tareas" class="prof-module hidden">
+                <div class="prof-form-wrap">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h2>Crear nueva tarea</h2>
+                            <span class="prof-section-sub">Publique una nueva actividad académica para sus alumnos</span>
+                        </div>
+                        <form id="form-prof-tareas">
+                            <div class="form-group">
+                                <label for="prof-tar-curso">Curso</label>
+                                <select id="prof-tar-curso" required></select>
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="prof-tar-titulo">Título de la Tarea</label>
+                                    <input type="text" id="prof-tar-titulo" placeholder="Ej: Trabajo de Investigación" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prof-tar-fecha">Fecha de Entrega</label>
+                                    <input type="date" id="prof-tar-fecha" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-tar-desc">Instrucciones</label>
+                                <textarea id="prof-tar-desc" rows="3" placeholder="Detalle lo que los alumnos deben entregar" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-tar-archivo">Archivo Adjunto (Nombre del archivo)</label>
+                                <input type="text" id="prof-tar-archivo" placeholder="Ej: guia_trabajo.pdf">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Crear y Publicar Tarea</button>
+                        </form>
+                    </div>
+
+                    <!-- SECCIÓN: TAREAS PUBLICADAS -->
+                    <div class="card" id="prof-published-tasks-card">
+                        <div class="card-header">
+                            <h2>Tareas publicadas</h2>
+                            <span class="prof-section-sub">Actividades escolares vigentes e históricas</span>
+                        </div>
+                        <div id="prof-published-tasks-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO 6: ENTREGAS DE ALUMNOS -->
+            <section id="module-entregas" class="prof-module hidden">
+                <div class="prof-list-wrap">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Entregas de Alumnos</h2>
+                            <span class="prof-section-sub">Envíos de tareas recibidos de los alumnos</span>
+                        </div>
+                        <div id="prof-entregas-list" class="prof-entregas-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO 7: MI HORARIO -->
+            <section id="module-horario" class="prof-module hidden">
+                <div class="prof-list-wrap">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Mi Horario</h2>
+                            <span class="prof-section-sub">Distribución semanal de clases</span>
+                        </div>
+                        <div id="prof-horario-list" class="prof-horario-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO 8: ANUNCIOS -->
+            <section id="module-anuncios" class="prof-module hidden">
+                <div class="prof-list-wrap">
+                    <!-- Bloque superior: Crear Anuncio -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h2>Publicar Anuncio</h2>
+                            <span class="prof-section-sub">Publique comunicados a la comunidad educativa</span>
+                        </div>
+                        <form id="form-prof-anuncio">
+                            <div class="form-group">
+                                <label for="prof-anuncio-titulo">Título del Anuncio</label>
+                                <input type="text" id="prof-anuncio-titulo" placeholder="Título del anuncio..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-anuncio-cont">Contenido</label>
+                                <textarea id="prof-anuncio-cont" rows="2" placeholder="Contenido del anuncio..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-secondary btn-block">Publicar Anuncio</button>
+                        </form>
+                    </div>
+
+                    <!-- Bloque inferior: Anuncios Publicados -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Anuncios del Colegio</h2>
+                        </div>
+                        <div id="prof-anuncios-list" class="prof-anuncios-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MÓDULO 9: MI PERFIL -->
+            <section id="module-perfil" class="prof-module hidden">
+                <div class="prof-perfil-wrap">
+                    <!-- Bloque Identidad -->
+                    <div class="card prof-perfil-identidad">
+                        <div class="prof-perfil-avatar" id="prof-perfil-avatar">P</div>
+                        <div class="prof-perfil-identidad-text">
+                            <p class="prof-perfil-nombre" id="prof-perfil-nombre">—</p>
+                            <p class="prof-perfil-rol-badge" id="prof-perfil-rol">Profesor</p>
+                            <p class="prof-perfil-codigo" id="prof-perfil-codigo"></p>
                         </div>
                     </div>
 
-                    <div class="right-col">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h3>Mi Horario de Clases</h3>
-                            </div>
-                            <div id="prof-horario-list" class="list-container"></div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Anuncios del Colegio</h3>
-                            </div>
-                            <div class="card-action-bar mb-3">
-                                <form id="form-prof-anuncio">
-                                    <div class="form-group">
-                                        <input type="text" id="prof-anuncio-titulo" placeholder="Título del anuncio..." required>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea id="prof-anuncio-cont" rows="2" placeholder="Contenido del anuncio..." required></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-secondary btn-block">Publicar Anuncio</button>
-                                </form>
-                            </div>
-                            <div id="prof-anuncios-list" class="list-container"></div>
+                    <!-- Bloque Información Profesional -->
+                    <div class="card prof-perfil-profesional">
+                        <p class="prof-perfil-profesional-titulo">Información Profesional</p>
+                        <div class="prof-perfil-profesional-grid" id="prof-perfil-info">
+                            <p class="text-muted">Cargando datos del perfil...</p>
                         </div>
                     </div>
                 </div>
             </section>
+
         </main>
     </div>
 
+    <!-- TOAST -->
     <div id="toast" class="toast hidden">Mensaje de alerta</div>
 
+    <!-- MODAL CALIFICAR SUBMISSION -->
     <div id="grade-modal" class="modal hidden">
         <div class="modal-content card">
             <h2>Calificar Tarea Recibida</h2>

@@ -1,38 +1,861 @@
-/* Dashboard Alumno styles */
+/* ============================================================
+   dashboardAlumno.css
+   Estilos del dashboard modular del Alumno.
+   Usa las variables de estilos-base.css (--primary-red, --gold,
+   --white, --bg-light, --border-color, --shadow, etc.)
+   No redefine clases globales (.card, .table, .badge, .btn,
+   .toast, .alert, .fade-in, .hidden, etc.)
+   ============================================================ */
 
-body {
-    background-color: #F9FAFB;
+/* ── Reset de body para layout sidebar ── */
+.alumno-body {
+    display: flex;
+    min-height: 100vh;
+    padding-bottom: 0;
+    background-color: #F3F4F6;
+    overflow-x: hidden;
 }
 
-.alumno-page {
-    width: 92%;
-    max-width: 1200px;
-    margin: 2rem auto 2rem;
+/* ============================================================
+   SIDEBAR (Conserved)
+   ============================================================ */
+.al-sidebar {
+    width: 240px;
+    min-width: 240px;
+    background-color: var(--white);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 90;
+    transition: transform 0.28s ease;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
 }
 
-.alumno-page .app-content {
-    margin-top: 0;
+.al-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem 1rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.alumno-page .role-view {
+.al-sidebar-logo {
+    width: 38px;
+    height: 38px;
+    background-color: var(--primary-red);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.al-sidebar-school {
     display: block;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    line-height: 1.2;
 }
 
-.alumno-page .stat-value {
-    font-size: 1.85rem;
-    font-weight: 800;
-    color: #1F2937;
-    margin: 0.35rem 0;
+.al-sidebar-role {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-weight: 600;
+    margin-top: 0.1rem;
 }
 
-.alumno-page .stat-sub {
-    color: #6B7280;
-    font-size: 0.86rem;
+.al-sidebar-nav {
+    flex: 1;
+    padding: 0.75rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    overflow-y: auto;
 }
 
+.al-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.al-nav-item i {
+    font-size: 1rem;
+    flex-shrink: 0;
+    width: 18px;
+    text-align: center;
+}
+
+.al-nav-item:hover {
+    background-color: #F3F4F6;
+    color: var(--text-dark);
+}
+
+.al-nav-item.active {
+    background-color: rgba(179, 0, 0, 0.08);
+    color: var(--primary-red);
+    font-weight: 600;
+    border-left: 3px solid var(--primary-red);
+    padding-left: calc(0.85rem - 3px);
+}
+
+.al-sidebar-footer {
+    padding: 0.75rem 0.5rem 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.al-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.al-logout-btn i {
+    font-size: 1rem;
+}
+
+.al-logout-btn:hover {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
+/* ============================================================
+   OVERLAY MÓVIL
+   ============================================================ */
+.al-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.35);
+    z-index: 85;
+}
+
+/* ============================================================
+   ÁREA PRINCIPAL
+   ============================================================ */
+.al-main-wrap {
+    flex: 1;
+    margin-left: 240px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ============================================================
+   HEADER (Conserved)
+   ============================================================ */
+.al-header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    height: 60px;
+}
+
+.al-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.al-toggle-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--text-dark);
+    padding: 0.2rem;
+    line-height: 1;
+}
+
+.al-module-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.al-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.al-greeting {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.al-greeting strong {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.al-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: var(--primary-red);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   CONTENIDO MODULAR Y PROPORCIONES
+   ============================================================ */
+.al-content {
+    flex: 1;
+    padding: 1.75rem 1.75rem 2.5rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.al-module {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Limitar ancho de módulos de listas para que no se estiren */
+#module-tareas, #module-anuncios, #module-pagos {
+    max-width: 860px;
+}
+
+.al-module-header-row {
+    margin-bottom: 1.25rem;
+}
+
+.al-module-header-row h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.al-section-sub {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+/* ============================================================
+   MÓDULO 1: INICIO (Visual Redesign)
+   ============================================================ */
+
+/* Fila 1: Desempeño (más ancha) y Grado/Sección (más estrecha) */
+.al-inicio-row-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    max-width: 960px;
+}
+
+/* Fila 2: Mini-tarjetas */
+.al-inicio-row-mini {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+    max-width: 960px;
+}
+
+.al-inicio-mini-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem 1.25rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.al-inicio-mini-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.al-inicio-mini-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.al-inicio-mini-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.al-stat-cursos {
+    border-left: 4px solid #6B7280;
+}
+
+.al-stat-tareas {
+    border-left: 4px solid var(--primary-red);
+}
+
+#al-inicio-pension-card {
+    border-left: 4px solid var(--gold);
+}
+
+/* Fila 3: Accesos rápidos más compactos y horizontales */
+.al-section-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+}
+
+.al-quick-links {
+    margin-bottom: 1.75rem;
+    max-width: 960px;
+}
+
+.al-quick-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+}
+
+.al-quick-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.65rem 0.85rem;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all 0.18s ease;
+    box-shadow: var(--shadow);
+}
+
+.al-quick-card i {
+    font-size: 1.1rem;
+    color: var(--primary-red);
+}
+
+.al-quick-card:hover {
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+}
+
+/* Fila 4: Previews muy compactos */
+.al-inicio-previews {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    max-width: 960px;
+}
+
+.al-inicio-preview-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border-left: 3px solid var(--primary-red);
+}
+
+.al-inicio-preview-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary-red);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.al-inicio-preview-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.al-inicio-preview-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+/* ============================================================
+   MÓDULO 2: MIS CURSOS Y NOTAS
+   ============================================================ */
+.al-cursos-wrap {
+    max-width: 860px;
+}
+
+.al-cursos-wrap .card-header h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* Estilos de tabla compacta de cursos con franja sutil roja en el primer TD */
+.al-cursos-tabla {
+    width: 100%;
+}
+
+.al-cursos-tabla td {
+    padding: 0.6rem 1rem !important;
+    vertical-align: middle;
+}
+
+.al-cursos-tabla tbody tr {
+    transition: all 0.15s ease;
+}
+
+.al-cursos-tabla tbody tr td:first-child {
+    border-left: 4px solid var(--primary-red);
+}
+
+.al-cursos-tabla tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.015);
+}
+
+/* ============================================================
+   MÓDULO 3: TAREAS Y ENVÍOS
+   ============================================================ */
+.al-tareas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.al-tarea-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    box-shadow: var(--shadow);
+}
+
+.al-tarea-card.estado-entregado {
+    border-left: 4px solid #10B981;
+}
+
+.al-tarea-card.estado-calificado {
+    border-left: 4px solid var(--gold);
+}
+
+.al-tarea-card.estado-pendiente {
+    border-left: 4px solid var(--primary-red);
+}
+
+.al-tarea-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+}
+
+.al-tarea-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.al-tarea-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.al-tarea-adjunto {
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+}
+
+.al-tarea-adjunto a {
+    color: var(--primary-red);
+    text-decoration: none;
+}
+
+.al-tarea-adjunto a:hover {
+    text-decoration: underline;
+}
+
+.al-tarea-entrega {
+    border-radius: 6px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+}
+
+.al-tarea-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+    align-items: center;
+}
+
+.al-tarea-form input[type="text"] {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    outline: none;
+    font-family: 'Outfit', sans-serif;
+    transition: border-color 0.2s ease;
+}
+
+.al-tarea-form input[type="text"]:focus {
+    border-color: var(--gold);
+}
+
+/* ============================================================
+   MÓDULO 4: ANUNCIOS
+   ============================================================ */
+.al-anuncios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.al-anuncio-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    box-shadow: var(--shadow);
+}
+
+.al-anuncio-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+}
+
+.al-anuncio-titulo {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.al-anuncio-fecha {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.al-anuncio-contenido {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.45rem;
+}
+
+.al-anuncio-autor {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.4rem;
+    margin-top: 0.35rem;
+}
+
+/* ============================================================
+   MÓDULO 5: PENSIONES Y PAGOS
+   ============================================================ */
+.al-pagos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.al-pago-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.al-pago-info-col {
+    flex: 1;
+    min-width: 160px;
+}
+
+.al-pago-concepto {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+
+.al-pago-detalle {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.al-pago-action-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   MÓDULO 6: MI PERFIL (Visual Redesign)
+   ============================================================ */
+.al-perfil-wrap {
+    max-width: 840px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Bloque Superior: Identidad */
+.al-perfil-identidad {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.al-perfil-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--primary-red);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    box-shadow: var(--shadow);
+}
+
+.al-perfil-identidad-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.al-perfil-nombre {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.al-perfil-rol-badge {
+    font-size: 0.82rem;
+    color: var(--white);
+    background-color: var(--gold);
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 9999px;
+    display: inline-block;
+    width: max-content;
+    margin: 0;
+}
+
+.al-perfil-codigo {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0.15rem 0 0;
+}
+
+/* Bloque Inferior: Académico */
+.al-perfil-academico {
+    padding: 1.5rem;
+}
+
+.al-perfil-academico-titulo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.al-perfil-academico-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.al-perfil-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.25rem 0;
+    border-bottom: none;
+}
+
+.al-perfil-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.al-perfil-value {
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+/* ============================================================
+   RESPONSIVE — MÓVIL
+   ============================================================ */
 @media (max-width: 768px) {
-    .alumno-page {
-        width: 94%;
-        margin-top: 1rem;
+    .al-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .al-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .al-main-wrap {
+        margin-left: 0;
+    }
+
+    .al-toggle-btn {
+        display: flex;
+    }
+
+    .al-content {
+        padding: 1.25rem 1rem 2rem;
+    }
+
+    .al-inicio-row-main {
+        grid-template-columns: 1fr;
+    }
+
+    .al-inicio-row-mini {
+        grid-template-columns: 1fr;
+    }
+
+    .al-quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .al-inicio-previews {
+        grid-template-columns: 1fr;
+    }
+
+    .al-perfil-academico-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .al-perfil-identidad {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .al-perfil-rol-badge {
+        margin: 0 auto;
+    }
+
+    .al-tarea-form {
+        grid-template-columns: 1fr;
+    }
+
+    .al-pago-card {
+        flex-direction: column;
+    }
+
+    .al-pago-action-col {
+        align-items: flex-start;
+    }
+
+    .al-greeting {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .al-quick-grid {
+        grid-template-columns: 1fr;
     }
 }

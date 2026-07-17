@@ -254,8 +254,7 @@ body {
 /* SECCIONES */
 #section-alumnos,
 #section-docentes,
-#section-finanzas,
-#section-usuarios {
+#section-finanzas {
     width: 100%;
     max-width: none;
 }
@@ -282,7 +281,7 @@ body {
 
     .sidebar-nav {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .dashboard-grid,
